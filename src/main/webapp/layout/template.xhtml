@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+   <title>Bosque Car</title>
+   <h:outputStylesheet name="primefaces-luna-amber/theme.css"/>
+   <link rel="stylesheet" href="../assets/css/main.css" />
+</h:head>
+
+<h:body>
+
+   <div>
+      <ui:include src="sidebar.xhtml"/>
+      <div class="container">
+         <!-- Navbar -->
+         <ui:include src="navbar.xhtml"/>
+         <main class="content">
+            <ui:insert name="content"/>
+         </main>
+      </div>
+   </div>
+</h:body>
+</html>
