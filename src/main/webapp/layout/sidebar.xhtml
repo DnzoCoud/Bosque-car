@@ -2,15 +2,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-
+      xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+   <h:outputStylesheet name="primefaces-luna-amber/theme.css"/>
+   <link rel="stylesheet" href="./assets/css/sidebar.css" />
+</h:head>
 <aside class="sidebar">
-   <h2>Menú</h2>
-   <ul>
-      <li><h:link outcome="home" value="Inicio"/></li>
-      <li><h:link outcome="perfil" value="Perfil"/></li>
-      <li><h:link outcome="configuracion" value="Configuración"/></li>
-   </ul>
+   <span class="sidebar__head">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-caravan"><path d="M18 19V9a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v8a2 2 0 0 0 2 2h2"/><path d="M2 9h3a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2"/><path d="M22 17v1a1 1 0 0 1-1 1H10v-9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v9"/><circle cx="8" cy="19" r="2"/></svg>
+   </span>
+   <nav>
+      <ul>
+         <li><h:link outcome="home" value="Inicio"/></li>
+         <li><h:link outcome="perfil" value="Perfil"/></li>
+         <li><h:link outcome="configuracion" value="Configuración"/></li>
+      </ul>
+   </nav>
+   <div>
+      <p:commandButton type="button" value="Salir" styleClass="ui-button-flat ui-button-plain" />
+   </div>
 </aside>
 
 </html>

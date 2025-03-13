@@ -1,9 +1,35 @@
 :root{
-    --main-color: #fafafa;
+    --main-color: #f5f7f9;
+    --secondary-color: #262626;
+    --text-light: #fff;
 }
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.root{
+    background-color: var(--main-color);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0.2rem;
+    gap: 0.2rem;
+
+}
+
+.container{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: 2px solid #dfdfdf;
+    padding: 0.5rem;
 }
