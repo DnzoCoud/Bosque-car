@@ -1,6 +1,6 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-
+//Hola
 import java.time.LocalDate;
 
 public class Quotation {
