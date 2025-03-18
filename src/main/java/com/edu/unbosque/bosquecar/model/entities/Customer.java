@@ -1,26 +1,16 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
 public class Customer {
-    private int id;
     private String cedula;
     private String name;
     private String lastName;
     private String email;
 
-    public Customer(int id, String cedula, String name, String lastName, String email) {
-        this.id = id;
+    public Customer(String cedula, String name, String lastName, String email) {
         this.cedula = cedula;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
