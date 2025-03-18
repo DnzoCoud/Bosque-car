@@ -2,13 +2,15 @@ package com.edu.unbosque.bosquecar.model.entities;
 
 public class Customer {
     private int id;
+    private String cedula;
     private String name;
     private String lastName;
     private int document;
     private String email;
 
-    public Customer(int id, String name, String lastName, int document, String email) {
+    public Customer(int id, String cedula, String name, String lastName, int document, String email) {
         this.id = id;
+        this.cedula = cedula;
         this.name = name;
         this.lastName = lastName;
         this.document = document;
@@ -33,6 +35,14 @@ public class Customer {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public void setLastName(String lastName) {
