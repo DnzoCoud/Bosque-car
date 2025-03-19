@@ -1,8 +1,19 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+
+@Entity
+@Table(name = "administrador")
 public class Administrator {
+    @Id
+    @Column(name = "id_admin")
     private int id;
+    @Column(name = "nombre")
     private String name;
+    @Column(name = "email")
     private String email;
     private String password;
 

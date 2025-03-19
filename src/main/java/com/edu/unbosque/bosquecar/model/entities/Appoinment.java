@@ -1,11 +1,23 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "cita")
 public class Appoinment {
+    @Id
+    @Column(name = "id_cita")
     private int id;
+    @Column(name = "id_cliente")
     private Customer customer;
+    @Column(name = "motivo")
     private String reason;
+    @Column(name = "fecha")
     private LocalDate date;
 
     public Appoinment(int id, Customer customer, String reason, LocalDate date) {
