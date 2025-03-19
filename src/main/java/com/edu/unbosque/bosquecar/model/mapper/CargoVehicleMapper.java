@@ -3,20 +3,18 @@ package com.edu.unbosque.bosquecar.model.mapper;
 import com.edu.unbosque.bosquecar.model.dto.CargoVehicleDTO;
 import com.edu.unbosque.bosquecar.model.entities.CargoVehicle;
 
-public class CargoVehicleMapper implements IVehicleMapper<CargoVehicle, CargoVehicleDTO>{
+public class CargoVehicleMapper{
 
-    @Override
-    public CargoVehicleDTO toDTO(CargoVehicle vehicle) {
+    public static CargoVehicleDTO toDTO(CargoVehicle vehicle) {
         return new CargoVehicleDTO(
                 vehicle.getId(),
                 vehicle.getBrand(),
                 vehicle.getModel(),
-                vehicle.getYear(),
                 vehicle.getPrice(),
                 vehicle.getMileage(),
                 vehicle.getState(),
                 vehicle.getDisponibility(),
-                vehicle.getCategory(),
+                CategoryMapper.toDto(vehicle.getCategory()),
                 vehicle.getImage(),
                 vehicle.getCargoCapacity(),
                 vehicle.getFuelType(),
@@ -24,18 +22,16 @@ public class CargoVehicleMapper implements IVehicleMapper<CargoVehicle, CargoVeh
         );
     }
 
-    @Override
-    public CargoVehicle toEntity(CargoVehicleDTO dto) {
+    public static CargoVehicle toEntity(CargoVehicleDTO dto) {
         return new CargoVehicle(
                 dto.getId(),
                 dto.getBrand(),
                 dto.getModel(),
-                dto.getYear(),
                 dto.getPrice(),
                 dto.getMileage(),
                 dto.getState(),
                 dto.getDisponibility(),
-                dto.getCategory(),
+                CategoryMapper.toEntity(dto.getCategory()),
                 dto.getImage(),
                 dto.getCargoCapacity(),
                 dto.getFuelType(),

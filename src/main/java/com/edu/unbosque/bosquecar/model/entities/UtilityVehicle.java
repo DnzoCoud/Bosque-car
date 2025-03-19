@@ -4,8 +4,8 @@ public class UtilityVehicle extends Vehicle {
     private String trunkSize;
     private String specialEquipment;
 
-    public UtilityVehicle(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image, String trunkSize, String specialEquipment) {
-        super(id, brand, model, year, price, mileage, state, disponibility, category, image);
+    public UtilityVehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image, String trunkSize, String specialEquipment) {
+        super(id, brand, model, price, mileage, state, disponibility, category, image);
         this.trunkSize = trunkSize;
         this.specialEquipment = specialEquipment;
     }

@@ -4,8 +4,8 @@ public class FamilyVehicle extends Vehicle {
     private int passengerCapacity;
     private String specialEquipment;
 
-    public FamilyVehicle(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image, int passengerCapacity, String specialEquipment) {
-        super(id, brand, model, year, price, mileage, state, disponibility, category, image);
+    public FamilyVehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image, int passengerCapacity, String specialEquipment) {
+        super(id, brand, model, price, mileage, state, disponibility, category, image);
         this.passengerCapacity = passengerCapacity;
         this.specialEquipment = specialEquipment;
     }

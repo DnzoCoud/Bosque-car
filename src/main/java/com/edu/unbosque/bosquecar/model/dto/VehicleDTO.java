@@ -7,19 +7,17 @@ public abstract class VehicleDTO {
     private int id;
     private String brand;
     private String model;
-    private int year;
     private double price;
-    private String mileage;
+    private int mileage;
     private VehicleState state;
     private VehicleDisponibility disponibility;
-    private String category;
+    private CategoryDTO category;
     private String image;
 
-    public VehicleDTO(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image) {
+    public VehicleDTO(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, CategoryDTO category, String image) {
         this.id = id;
         this.brand = brand;
         this.model = model;
-        this.year = year;
         this.price = price;
         this.mileage = mileage;
         this.state = state;
@@ -39,16 +37,11 @@ public abstract class VehicleDTO {
     public String getModel() {
         return model;
     }
-
-    public int getYear() {
-        return year;
-    }
-
     public double getPrice() {
         return price;
     }
 
-    public String getMileage() {
+    public int getMileage() {
         return mileage;
     }
 
@@ -60,7 +53,7 @@ public abstract class VehicleDTO {
         return disponibility;
     }
 
-    public String getCategory() {
+    public CategoryDTO getCategory() {
         return category;
     }
 

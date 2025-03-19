@@ -13,6 +13,11 @@ public class Appoinment {
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "id_vehiculo")
+    private Vehicle vehicle;
+
     @Column(name = "motivo")
     private String reason;
     @Column(name = "fecha")
@@ -21,9 +26,10 @@ public class Appoinment {
     public Appoinment(){
 
     }
-    public Appoinment(int id, Customer customer, String reason, LocalDate date) {
+    public Appoinment(int id, Customer customer, Vehicle vehicle,String reason, LocalDate date) {
         this.id = id;
         this.customer = customer;
+        this.vehicle = vehicle;
         this.reason = reason;
         this.date = date;
     }
@@ -58,5 +64,13 @@ public class Appoinment {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }

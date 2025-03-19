@@ -5,8 +5,8 @@ public class CargoVehicle extends Vehicle {
     private String fuelType;
     private String traction;
 
-    public CargoVehicle(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image, int cargoCapacity, String fuelType, String traction) {
-        super(id, brand, model, year, price, mileage, state, disponibility, category, image);
+    public CargoVehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image, int cargoCapacity, String fuelType, String traction) {
+        super(id, brand, model, price, mileage, state, disponibility, category, image);
         this.cargoCapacity = cargoCapacity;
         this.fuelType = fuelType;
         this.traction = traction;

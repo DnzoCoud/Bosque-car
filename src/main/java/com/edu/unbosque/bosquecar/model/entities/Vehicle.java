@@ -1,22 +1,48 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_vehiculo", discriminatorType = DiscriminatorType.STRING)
 public abstract class Vehicle {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_vehiculo")
     private int id;
+
+    @Column(name = "marca")
     private String brand;
+
+    @Column(name = "modelo")
     private String model;
-    private int year;
+
+    @Column(name = "precio")
     private double price;
-    private String mileage;
+
+    @Column(name = "kilometraje")
+    private int mileage;
+
+    @Column(name = "estado")
+    @Enumerated(EnumType.STRING)
     private VehicleState state;
+
+    @Column(name = "disponibilidad")
+    @Enumerated(EnumType.STRING)
     private VehicleDisponibility disponibility;
-    private String category;
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Category category;
+    @Column(nullable = true)
     private String image;
 
-    public Vehicle(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image) {
+    public Vehicle() {  }
+
+    public Vehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image) {
         this.id = id;
         this.brand = brand;
         this.model = model;
-        this.year = year;
         this.price = price;
         this.mileage = mileage;
         this.state = state;
@@ -49,14 +75,6 @@ public abstract class Vehicle {
         this.model = model;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -65,11 +83,11 @@ public abstract class Vehicle {
         this.price = price;
     }
 
-    public String getMileage() {
+    public int getMileage() {
         return mileage;
     }
 
-    public void setMileage(String mileage) {
+    public void setMileage(int mileage) {
         this.mileage = mileage;
     }
 
@@ -89,11 +107,11 @@ public abstract class Vehicle {
         this.disponibility = disponibility;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
