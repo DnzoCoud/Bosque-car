@@ -22,11 +22,11 @@ public class DataMapper {
     }
 
     public Customer toEntity(CustomerDTO dto) {
-        return new Customer(dto.getId(), dto.getCedula(), dto.getName(), dto.getLastName(), dto.getDocument(), dto.getEmail());
+        return new Customer(dto.getCedula(), dto.getName(), dto.getLastName(), dto.getEmail());
     }
 
     public CustomerDTO toDto(Customer customer) {
-        return new CustomerDTO(customer.getId(), customer.getCedula(), customer.getName(), customer.getLastName(), customer.getDocument(), customer.getEmail());
+        return new CustomerDTO(customer.getCedula(), customer.getName(), customer.getLastName(), customer.getEmail());
     }
 
     public Appoinment toEntity(AppoimentDTO dto) {
