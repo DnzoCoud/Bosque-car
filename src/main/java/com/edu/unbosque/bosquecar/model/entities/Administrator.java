@@ -15,13 +15,14 @@ public class Administrator {
     private String name;
     @Column(name = "email")
     private String email;
-    private String password;
 
-    public Administrator(int id, String name, String email, String password) {
+    public Administrator(){
+
+    }
+    public Administrator(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
     public int getId() {
@@ -48,11 +49,4 @@ public class Administrator {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -1,9 +1,6 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -13,13 +10,17 @@ public class Appoinment {
     @Id
     @Column(name = "id_cita")
     private int id;
-    @Column(name = "id_cliente")
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
     private Customer customer;
     @Column(name = "motivo")
     private String reason;
     @Column(name = "fecha")
     private LocalDate date;
 
+    public Appoinment(){
+
+    }
     public Appoinment(int id, Customer customer, String reason, LocalDate date) {
         this.id = id;
         this.customer = customer;

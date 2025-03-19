@@ -1,10 +1,7 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
 //Hola
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -14,12 +11,18 @@ public class Quotation {
     @Id
     @Column(name = "id_cotizacion")
     private int id;
-    @Column(name = "id_cliente")
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
     private Customer customer;
-    @Column(name = "id_vehiculo")
+    @ManyToOne
+    @JoinColumn(name = "id_vehiculo")
     private Vehicle vehicle;
     @Column(name = "fecha_cotizacion")
     private LocalDate date;
+
+    public Quotation(){
+
+    }
 
     public Quotation(int id, Customer customer, Vehicle vehicle, LocalDate date) {
         this.id = id;
