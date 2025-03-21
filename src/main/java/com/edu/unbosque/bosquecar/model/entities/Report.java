@@ -1,11 +1,20 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
+
 public class Report {
     private int id;
     private Vehicle vehicle;
     private int numberApplication;
     private int numberQuotation;
 
+    public Report(){
+
+    }
     public Report(int id, Vehicle vehicle, int numberApplication, int numberQuotation) {
         this.id = id;
         this.vehicle = vehicle;

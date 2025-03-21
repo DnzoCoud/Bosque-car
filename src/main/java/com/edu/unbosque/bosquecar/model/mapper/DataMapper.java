@@ -38,10 +38,10 @@ public class DataMapper {
     }
 
     public Administrator toEntity(AdministratorDTO dto) {
-        return new Administrator(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
+        return new Administrator(dto.getId(), dto.getName(), dto.getEmail());
     }
     public AdministratorDTO toDto(Administrator administrator) {
-        return new AdministratorDTO(administrator.getId(), administrator.getName(), administrator.getEmail(), administrator.getPassword());
+        return new AdministratorDTO(administrator.getId(), administrator.getName(), administrator.getEmail());
     }
 
 }

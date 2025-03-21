@@ -1,16 +1,28 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-public class Administrator {
-    private int id;
-    private String name;
-    private String email;
-    private String password;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 
-    public Administrator(int id, String name, String email, String password) {
+@Entity
+@Table(name = "administrador")
+public class Administrator {
+    @Id
+    @Column(name = "id_admin")
+    private int id;
+    @Column(name = "nombre")
+    private String name;
+    @Column(name = "email")
+    private String email;
+
+    public Administrator(){
+
+    }
+    public Administrator(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
     public int getId() {
@@ -37,11 +49,4 @@ public class Administrator {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

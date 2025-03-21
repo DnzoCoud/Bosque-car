@@ -1,11 +1,24 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "cliente")
 public class Customer {
+    @Id
     private String cedula;
+    @Column(name = "nombre")
     private String name;
+    @Column(name = "apellido")
     private String lastName;
     private String email;
 
+    public Customer(){
+
+    }
     public Customer(String cedula, String name, String lastName, String email) {
         this.cedula = cedula;
         this.name = name;
