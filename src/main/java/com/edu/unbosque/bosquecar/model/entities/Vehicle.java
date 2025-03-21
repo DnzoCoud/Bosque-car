@@ -6,6 +6,11 @@ import jakarta.persistence.*;
 @Table(name = "vehiculo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "id_categoria", discriminatorType = DiscriminatorType.INTEGER)
+@NamedQueries({
+        @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v"),
+        @NamedQuery(name = "Vehicle.findByDisponibility", query = "SELECT v FROM Vehicle v WHERE v.availability = :availability"),
+        @NamedQuery(name = "Vehicle.findByState", query = "SELECT v FROM Vehicle v WHERE v.status = :status"),
+})
 public abstract class Vehicle {
 
     @Id
