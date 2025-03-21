@@ -22,4 +22,20 @@ public class UtilityVehicle extends Vehicle {
         this.trunkSize = trunkSize;
         this.specialEquipment = specialEquipment;
     }
+
+    public String getTrunkSize() {
+        return trunkSize;
+    }
+
+    public void setTrunkSize(String trunkSize) {
+        this.trunkSize = trunkSize;
+    }
+
+    public String getSpecialEquipment() {
+        return specialEquipment;
+    }
+
+    public void setSpecialEquipment(String specialEquipment) {
+        this.specialEquipment = specialEquipment;
+    }
 }

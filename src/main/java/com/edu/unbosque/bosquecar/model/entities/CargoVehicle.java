@@ -27,4 +27,28 @@ public class CargoVehicle extends Vehicle {
         this.fuelType = fuelType;
         this.traction = traction;
     }
+
+    public Integer getLoadCapacity() {
+        return loadCapacity;
+    }
+
+    public void setLoadCapacity(Integer loadCapacity) {
+        this.loadCapacity = loadCapacity;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public String getTraction() {
+        return traction;
+    }
+
+    public void setTraction(String traction) {
+        this.traction = traction;
+    }
 }
