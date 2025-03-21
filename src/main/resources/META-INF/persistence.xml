@@ -4,11 +4,11 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/jakartaee/persistence_4_0.xsd"
              version="3.0">
     <persistence-unit name="BosqueCarPU">
-        <jta-data-source>java:/BosqueCar</jta-data-source>
+        <jta-data-source>java:/bosque_car</jta-data-source>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="jakarta.persistence.jdbc.user" value="root" />
-            <property name="jakarta.persistence.jdbc.password" value="123456" />
+            <property name="jakarta.persistence.jdbc.password" value="" />
             <property name="jakarta.persistence.schema-generation.database.action" value="none" />
         </properties>
     </persistence-unit>

@@ -1,28 +1,54 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("2")
 public class FamilyVehicle extends Vehicle {
-    private int passengerCapacity;
-    private String specialEquipment;
+    @Column(name = "capacidad_carga")
+    private Integer loadCapacity;
 
-    public FamilyVehicle(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image, int passengerCapacity, String specialEquipment) {
-        super(id, brand, model, year, price, mileage, state, disponibility, category, image);
-        this.passengerCapacity = passengerCapacity;
-        this.specialEquipment = specialEquipment;
+    @Column(name = "tipo_combustible")
+    private String fuelType;
+
+    @Column(name = "traccion")
+    private String traction;
+
+    public FamilyVehicle(){
+        super();
     }
 
-    public int getPassengerCapacity() {
-        return passengerCapacity;
+    public FamilyVehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, Integer loadCapacity, String fuelType, String traction) {
+        super(id, brand, model, price, mileage, status, availability, category);
+        this.loadCapacity = loadCapacity;
+        this.fuelType = fuelType;
+        this.traction = traction;
     }
 
-    public void setPassengerCapacity(int passengerCapacity) {
-        this.passengerCapacity = passengerCapacity;
+    public Integer getLoadCapacity() {
+        return loadCapacity;
     }
 
-    public String getSpecialEquipment() {
-        return specialEquipment;
+    public void setLoadCapacity(Integer loadCapacity) {
+        this.loadCapacity = loadCapacity;
     }
 
-    public void setSpecialEquipment(String specialEquipment) {
-        this.specialEquipment = specialEquipment;
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public String getTraction() {
+        return traction;
+    }
+
+    public void setTraction(String traction) {
+        this.traction = traction;
     }
 }

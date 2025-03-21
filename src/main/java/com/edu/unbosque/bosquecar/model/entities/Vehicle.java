@@ -1,35 +1,60 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-public abstract class Vehicle {
-    private int id;
-    private String brand;
-    private String model;
-    private int year;
-    private double price;
-    private String mileage;
-    private VehicleState state;
-    private VehicleDisponibility disponibility;
-    private String category;
-    private String image;
+import jakarta.persistence.*;
 
-    public Vehicle(int id, String brand, String model, int year, double price, String mileage, VehicleState state, VehicleDisponibility disponibility, String category, String image) {
+@Entity
+@Table(name = "vehiculo")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "id_categoria", discriminatorType = DiscriminatorType.INTEGER)
+public abstract class Vehicle {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_vehiculo")
+    private Integer id;
+
+    @Column(name = "marca", nullable = false)
+    private String brand;
+
+    @Column(name = "modelo", nullable = false)
+    private String model;
+
+    @Column(name = "precio", nullable = false)
+    private Double price;
+
+    @Column(name = "kilometraje")
+    private Integer mileage;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private VehicleState status; // "nuevo", "usado"
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "disponibilidad", nullable = false)
+    private VehicleDisponibility availability; // "disponible", "reservado", "vendido"
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", nullable = false)
+    private Category category;
+
+    public Vehicle() {  }
+
+    public Vehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category) {
         this.id = id;
         this.brand = brand;
         this.model = model;
-        this.year = year;
         this.price = price;
         this.mileage = mileage;
-        this.state = state;
-        this.disponibility = disponibility;
+        this.status = status;
+        this.availability = availability;
         this.category = category;
-        this.image = image;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,59 +74,43 @@ public abstract class Vehicle {
         this.model = model;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public String getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(String mileage) {
+    public void setMileage(Integer mileage) {
         this.mileage = mileage;
     }
 
-    public VehicleState getState() {
-        return state;
+    public VehicleState getStatus() {
+        return status;
     }
 
-    public void setState(VehicleState state) {
-        this.state = state;
+    public void setStatus(VehicleState status) {
+        this.status = status;
     }
 
-    public VehicleDisponibility getDisponibility() {
-        return disponibility;
+    public VehicleDisponibility getAvailability() {
+        return availability;
     }
 
-    public void setDisponibility(VehicleDisponibility disponibility) {
-        this.disponibility = disponibility;
+    public void setAvailability(VehicleDisponibility availability) {
+        this.availability = availability;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }
