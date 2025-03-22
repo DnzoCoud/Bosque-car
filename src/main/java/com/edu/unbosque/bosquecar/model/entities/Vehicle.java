@@ -3,59 +3,66 @@ package com.edu.unbosque.bosquecar.model.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "vehiculo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_vehiculo", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "id_categoria", discriminatorType = DiscriminatorType.INTEGER)
+@NamedQueries({
+        @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v"),
+        @NamedQuery(name = "Vehicle.findByDisponibility", query = "SELECT v FROM Vehicle v WHERE v.availability = :availability"),
+        @NamedQuery(name = "Vehicle.findByState", query = "SELECT v FROM Vehicle v WHERE v.status = :status"),
+})
 public abstract class Vehicle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vehiculo")
-    private int id;
+    private Integer id;
 
-    @Column(name = "marca")
+    @Column(name = "marca", nullable = false)
     private String brand;
 
-    @Column(name = "modelo")
+    @Column(name = "modelo", nullable = false)
     private String model;
 
-    @Column(name = "precio")
-    private double price;
+    @Column(name = "precio", nullable = false)
+    private Double price;
 
     @Column(name = "kilometraje")
-    private int mileage;
+    private Integer mileage;
 
-    @Column(name = "estado")
     @Enumerated(EnumType.STRING)
-    private VehicleState state;
+    @Column(name = "estado", nullable = false)
+    private VehicleState status; // "nuevo", "usado"
 
-    @Column(name = "disponibilidad")
     @Enumerated(EnumType.STRING)
-    private VehicleDisponibility disponibility;
+    @Column(name = "disponibilidad", nullable = false)
+    private VehicleDisponibility availability; // "disponible", "reservado", "vendido"
 
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
+    @JoinColumn(name = "id_categoria", nullable = false)
     private Category category;
-    @Column(nullable = true)
+
     private String image;
 
     public Vehicle() {  }
 
-    public Vehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image) {
+    public Vehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.price = price;
         this.mileage = mileage;
-        this.state = state;
-        this.disponibility = disponibility;
+        this.status = status;
+        this.availability = availability;
         this.category = category;
         this.image = image;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -75,36 +82,36 @@ public abstract class Vehicle {
         this.model = model;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(int mileage) {
+    public void setMileage(Integer mileage) {
         this.mileage = mileage;
     }
 
-    public VehicleState getState() {
-        return state;
+    public VehicleState getStatus() {
+        return status;
     }
 
-    public void setState(VehicleState state) {
-        this.state = state;
+    public void setStatus(VehicleState status) {
+        this.status = status;
     }
 
-    public VehicleDisponibility getDisponibility() {
-        return disponibility;
+    public VehicleDisponibility getAvailability() {
+        return availability;
     }
 
-    public void setDisponibility(VehicleDisponibility disponibility) {
-        this.disponibility = disponibility;
+    public void setAvailability(VehicleDisponibility availability) {
+        this.availability = availability;
     }
 
     public Category getCategory() {

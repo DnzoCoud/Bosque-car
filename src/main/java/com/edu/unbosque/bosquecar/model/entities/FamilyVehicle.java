@@ -1,28 +1,52 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-public class FamilyVehicle extends Vehicle {
-    private int passengerCapacity;
-    private String specialEquipment;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
-    public FamilyVehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image, int passengerCapacity, String specialEquipment) {
-        super(id, brand, model, price, mileage, state, disponibility, category, image);
+@Entity
+@DiscriminatorValue("2")
+public class FamilyVehicle extends Vehicle {
+    @Column(name = "capacidad_pasajeros")
+    private Integer passengerCapacity;
+
+    @Column(name = "sistema_seguridad")
+    private String securitySystem;
+
+    @Column(name = "confort")
+    private String confort;
+
+    public FamilyVehicle(){}
+
+    public FamilyVehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image, Integer passengerCapacity, String securitySystem, String confort) {
+        super(id, brand, model, price, mileage, status, availability, category, image);
         this.passengerCapacity = passengerCapacity;
-        this.specialEquipment = specialEquipment;
+        this.securitySystem = securitySystem;
+        this.confort = confort;
     }
 
-    public int getPassengerCapacity() {
+    public Integer getPassengerCapacity() {
         return passengerCapacity;
     }
 
-    public void setPassengerCapacity(int passengerCapacity) {
+    public void setPassengerCapacity(Integer passengerCapacity) {
         this.passengerCapacity = passengerCapacity;
     }
 
-    public String getSpecialEquipment() {
-        return specialEquipment;
+    public String getSecuritySystem() {
+        return securitySystem;
     }
 
-    public void setSpecialEquipment(String specialEquipment) {
-        this.specialEquipment = specialEquipment;
+    public void setSecuritySystem(String securitySystem) {
+        this.securitySystem = securitySystem;
+    }
+
+    public String getConfort() {
+        return confort;
+    }
+
+    public void setConfort(String confort) {
+        this.confort = confort;
     }
 }

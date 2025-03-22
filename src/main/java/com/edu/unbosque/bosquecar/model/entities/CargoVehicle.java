@@ -1,23 +1,38 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("1")
 public class CargoVehicle extends Vehicle {
-    private int cargoCapacity;
+    @Column(name = "capacidad_carga")
+    private Integer loadCapacity;
+
+    @Column(name = "tipo_combustible")
     private String fuelType;
+
+    @Column(name = "traccion")
     private String traction;
 
-    public CargoVehicle(int id, String brand, String model, double price, int mileage, VehicleState state, VehicleDisponibility disponibility, Category category, String image, int cargoCapacity, String fuelType, String traction) {
-        super(id, brand, model, price, mileage, state, disponibility, category, image);
-        this.cargoCapacity = cargoCapacity;
+    public CargoVehicle(){
+        super();
+    }
+
+    public CargoVehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category , String image, Integer loadCapacity, String fuelType, String traction) {
+        super(id, brand, model, price, mileage, status, availability, category, image);
+        this.loadCapacity = loadCapacity;
         this.fuelType = fuelType;
         this.traction = traction;
     }
 
-    public int getCargoCapacity() {
-        return cargoCapacity;
+    public Integer getLoadCapacity() {
+        return loadCapacity;
     }
 
-    public void setCargoCapacity(int cargoCapacity) {
-        this.cargoCapacity = cargoCapacity;
+    public void setLoadCapacity(Integer loadCapacity) {
+        this.loadCapacity = loadCapacity;
     }
 
     public String getFuelType() {
