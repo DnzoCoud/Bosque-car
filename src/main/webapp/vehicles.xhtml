@@ -51,6 +51,12 @@
 
                         <h:outputLabel for="price" value="Precio:"/>
                         <p:inputNumber id="price" value="#{vehicleBean.newVehicle.price}" required="true"/>
+
+                        <p:outputLabel for="category" value="Categoría:" />
+                        <p:selectOneMenu id="category" value="#{vehicleBean.newVehicle.categoryId}">
+                            <f:selectItem itemLabel="Seleccione una categoría" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.categories}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat.id}" />
+                        </p:selectOneMenu>
                     </h:panelGrid>
 
                     <p:commandButton value="Guardar" icon="pi pi-check"
