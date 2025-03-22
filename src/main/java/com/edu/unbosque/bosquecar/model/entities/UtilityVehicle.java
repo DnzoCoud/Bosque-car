@@ -5,7 +5,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("3")
+@DiscriminatorValue("UTILIDAD")
 public class UtilityVehicle extends Vehicle {
     @Column(name = "tamano_maletero")
     private String trunkSize;

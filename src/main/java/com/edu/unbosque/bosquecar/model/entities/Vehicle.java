@@ -1,11 +1,12 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DiscriminatorFormula;
 
 @Entity
 @Table(name = "vehiculo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "id_categoria", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorFormula("(SELECT c.nombre FROM categoria c WHERE c.id_categoria = id_categoria)")
 @NamedQueries({
         @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v"),
         @NamedQuery(name = "Vehicle.findByDisponibility", query = "SELECT v FROM Vehicle v WHERE v.availability = :availability"),

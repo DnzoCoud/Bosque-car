@@ -19,6 +19,7 @@ public class VehicleMapper {
         dto.setStatus(vehicle.getStatus().name());
         dto.setAvailability(vehicle.getAvailability().name());
         dto.setCategoryId(vehicle.getCategory().getId());
+        dto.setImage(vehicle.getImage());
 
         // Mapeo de atributos específicos por categoría
         if (vehicle instanceof CargoVehicle cargo) {
@@ -78,6 +79,7 @@ public class VehicleMapper {
         vehicle.setMileage(dto.getMileage());
         vehicle.setStatus(VehicleState.valueOf(dto.getStatus().toUpperCase()));
         vehicle.setAvailability(VehicleDisponibility.valueOf(dto.getAvailability().toUpperCase()));
+        vehicle.setImage(dto.getImage());
 
         return vehicle;
     }

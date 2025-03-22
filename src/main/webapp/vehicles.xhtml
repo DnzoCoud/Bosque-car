@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="layout/template.xhtml">
+        <ui:define name="content">
+            <h:form id="vehicleForm">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Registrar Vehículo" icon="pi pi-plus"
+                                         actionListener="#{vehicleBean.openModal}"
+                                         update=":modalVehicle" oncomplete="PF('vehicleDialog').show()"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:growl id="messages" showDetail="true"/>
+                <p:dataView value="#{vehicleBean.vehicles}" var="vehicle" layout="grid"
+                            rows="6" paginator="true" rowsPerPageTemplate="6,12,18">
+                    <p:dataViewGridItem>
+                        <p:card style="width: 250px; margin: 15px;">
+                            <f:facet name="header">
+                                <h:graphicImage value="#{vehicle.image}" style="width: 100%; height: 150px;"/>
+                            </f:facet>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Marca:"/>
+                                <h:outputText value="#{vehicle.brand}"/>
+                                <h:outputText value="Modelo:"/>
+                                <h:outputText value="#{vehicle.model}"/>
+                                <h:outputText value="Precio:"/>
+                                <h:outputText value="#{vehicle.price}" style="font-weight: bold;"/>
+                            </h:panelGrid>
+                        </p:card>
+                    </p:dataViewGridItem>
+                </p:dataView>
+            </h:form>
+
+            <!-- Modal de Registro -->
+            <p:dialog header="Registrar Vehículo" widgetVar="vehicleDialog" modal="true" resizable="false" id="modalVehicle">
+                <h:form id="registerForm">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="brand" value="Marca:"/>
+                        <p:inputText id="brand" value="#{vehicleBean.newVehicle.brand}" required="true"/>
+
+                        <h:outputLabel for="model" value="Modelo:"/>
+                        <p:inputText id="model" value="#{vehicleBean.newVehicle.model}" required="true"/>
+
+                        <h:outputLabel for="price" value="Precio:"/>
+                        <p:inputNumber id="price" value="#{vehicleBean.newVehicle.price}" required="true"/>
+                    </h:panelGrid>
+
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{vehicleBean.saveVehicle}"
+                                     update="vehicleForm" oncomplete="PF('vehicleDialog').hide()"/>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

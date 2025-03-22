@@ -1,8 +1,9 @@
 package com.edu.unbosque.bosquecar.model.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class VehicleDTO {
+public class VehicleDTO implements Serializable {
     private Integer id;
     private String plate;
     private String brand;
@@ -12,6 +13,8 @@ public class VehicleDTO {
     private String status;          // "nuevo" o "usado"
     private String availability;    // "disponible", "reservado", "vendido"
     private Integer categoryId;
+    private String image;
+
 
     // Atributos específicos según la categoría
     private Integer cargoCapacity;
@@ -26,7 +29,7 @@ public class VehicleDTO {
 
     public VehicleDTO(){}
 
-    public VehicleDTO(Integer id, String plate, String brand, String model, double price, Integer mileage, String status, String availability, Integer categoryId, Integer cargoCapacity, String fuelType, String traction, Integer passengerCapacity, String securitySystem, String confort, String specialEquipment, String trunkSize, String versatility) {
+    public VehicleDTO(Integer id, String plate, String brand, String model, double price, Integer mileage, String status, String availability, Integer categoryId, Integer cargoCapacity, String fuelType, String traction, Integer passengerCapacity, String securitySystem, String confort, String specialEquipment, String trunkSize, String versatility,String image) {
         this.id = id;
         this.plate = plate;
         this.brand = brand;
@@ -45,6 +48,7 @@ public class VehicleDTO {
         this.specialEquipment = specialEquipment;
         this.trunkSize = trunkSize;
         this.versatility = versatility;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -189,5 +193,13 @@ public class VehicleDTO {
 
     public void setVersatility(String versatility) {
         this.versatility = versatility;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
