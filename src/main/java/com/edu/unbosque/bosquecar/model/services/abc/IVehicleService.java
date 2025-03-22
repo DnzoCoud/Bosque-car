@@ -8,11 +8,11 @@ import com.edu.unbosque.bosquecar.model.entities.VehicleState;
 import java.util.List;
 
 public interface IVehicleService {
-    void saveVehicle(Vehicle vehicle);
-    void updateVehicle(Vehicle vehicle);
+    void saveVehicle(VehicleDTO vehicle);
+    void updateVehicle(VehicleDTO vehicle);
     void deleteVehicle(Integer id);
-    Vehicle getVehicleById(Integer id);
-    List<Vehicle> getAllVehicles();
-    List<Vehicle> getVehiclesByAvailability(VehicleDisponibility availability);
-    List<Vehicle> getVehiclesByStatus(VehicleState status);
+    VehicleDTO getVehicleById(Integer id);
+    List<VehicleDTO> getAllVehicles();
+    List<VehicleDTO> getVehiclesByAvailability(VehicleDisponibility availability);
+    List<VehicleDTO> getVehiclesByStatus(VehicleState status);
 }

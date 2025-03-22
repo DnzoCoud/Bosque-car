@@ -1,16 +1,16 @@
 package com.edu.unbosque.bosquecar.model.services.impl;
 
 import com.edu.unbosque.bosquecar.model.dto.VehicleDTO;
-import com.edu.unbosque.bosquecar.model.entities.Vehicle;
 import com.edu.unbosque.bosquecar.model.entities.VehicleDisponibility;
 import com.edu.unbosque.bosquecar.model.entities.VehicleState;
+import com.edu.unbosque.bosquecar.model.mapper.VehicleMapper;
 import com.edu.unbosque.bosquecar.model.persistence.dao.IVehicleDAO;
-import com.edu.unbosque.bosquecar.model.persistence.impl.VehicleDAOImpl;
 import com.edu.unbosque.bosquecar.model.services.abc.IVehicleService;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class VehicleService implements IVehicleService {
@@ -19,12 +19,12 @@ public class VehicleService implements IVehicleService {
     private IVehicleDAO vehicleDAO;
 
     @Override
-    public void saveVehicle(Vehicle vehicle) {
-
+    public void saveVehicle(VehicleDTO vehicle) {
+        vehicleDAO.save(VehicleMapper.toEntity(vehicle));
     }
 
     @Override
-    public void updateVehicle(Vehicle vehicle) {
+    public void updateVehicle(VehicleDTO vehicle) {
 
     }
 
@@ -34,22 +34,31 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
-    public Vehicle getVehicleById(Integer id) {
-        return null;
+    public VehicleDTO getVehicleById(Integer id) {
+        return VehicleMapper.toDTO(vehicleDAO.findById(id));
     }
 
     @Override
-    public List<Vehicle> getAllVehicles() {
-        return List.of();
+    public List<VehicleDTO> getAllVehicles() {
+        return vehicleDAO.findAll()
+                .stream()
+                .map(VehicleMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Vehicle> getVehiclesByAvailability(VehicleDisponibility availability) {
-        return List.of();
+    public List<VehicleDTO> getVehiclesByAvailability(VehicleDisponibility availability) {
+        return vehicleDAO.findByAvailability(availability)
+                .stream()
+                .map(VehicleMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Vehicle> getVehiclesByStatus(VehicleState status) {
-        return List.of();
+    public List<VehicleDTO> getVehiclesByStatus(VehicleState status) {
+        return vehicleDAO.findByStatus(status)
+                .stream()
+                .map(VehicleMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
