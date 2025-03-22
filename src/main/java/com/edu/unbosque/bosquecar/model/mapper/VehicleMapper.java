@@ -31,6 +31,7 @@ public class VehicleMapper {
         } else if (vehicle instanceof UtilityVehicle utility) {
             dto.setTrunkSize(utility.getTrunkSize());
             dto.setSpecialEquipment(utility.getSpecialEquipment());
+            dto.setVersatility(utility.getVersatility());
         }
 
         return dto;
