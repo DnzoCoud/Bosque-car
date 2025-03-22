@@ -20,13 +20,14 @@ public class Appoinment {
 
     @Column(name = "motivo")
     private String reason;
+
     @Column(name = "fecha")
     private LocalDate date;
 
     public Appoinment(){
 
     }
-    public Appoinment(int id, Customer customer, Vehicle vehicle,String reason, LocalDate date) {
+    public Appoinment(int id, Customer customer, Vehicle vehicle, String reason, LocalDate date) {
         this.id = id;
         this.customer = customer;
         this.vehicle = vehicle;
