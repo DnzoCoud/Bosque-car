@@ -6,6 +6,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "cita")
+@NamedQueries({
+        @NamedQuery(name = "Appoinment.findAll", query = "SELECT v FROM Appoinment v")
+
+})
 public class Appoinment {
     @Id
     @Column(name = "id_cita")

@@ -1,12 +1,13 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cliente")
+@NamedQueries({
+        @NamedQuery(name = "Customer.findAll", query = "SELECT v FROM Customer v")
+
+})
 public class Customer {
     @Id
     private String cedula;
