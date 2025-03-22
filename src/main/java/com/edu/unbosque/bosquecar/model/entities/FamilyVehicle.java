@@ -19,8 +19,8 @@ public class FamilyVehicle extends Vehicle {
 
     public FamilyVehicle(){}
 
-    public FamilyVehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image, Integer passengerCapacity, String securitySystem, String confort) {
-        super(id, brand, model, price, mileage, status, availability, category, image);
+    public FamilyVehicle(Integer id, String brand, String plate, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image, Integer passengerCapacity, String securitySystem, String confort) {
+        super(id, plate, brand, model, price, mileage, status, availability, category, image);
         this.passengerCapacity = passengerCapacity;
         this.securitySystem = securitySystem;
         this.confort = confort;

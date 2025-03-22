@@ -18,6 +18,9 @@ public abstract class Vehicle {
     @Column(name = "id_vehiculo")
     private Integer id;
 
+    @Column(name = "placa", nullable = false)
+    private String plate;
+
     @Column(name = "marca", nullable = false)
     private String brand;
 
@@ -46,8 +49,9 @@ public abstract class Vehicle {
 
     public Vehicle() {  }
 
-    public Vehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image) {
+    public Vehicle(Integer id, String plate, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image) {
         this.id = id;
+        this.plate = plate;
         this.brand = brand;
         this.model = model;
         this.price = price;
@@ -64,6 +68,14 @@ public abstract class Vehicle {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
     }
 
     public String getBrand() {

@@ -20,8 +20,8 @@ public class CargoVehicle extends Vehicle {
         super();
     }
 
-    public CargoVehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category , String image, Integer loadCapacity, String fuelType, String traction) {
-        super(id, brand, model, price, mileage, status, availability, category, image);
+    public CargoVehicle(Integer id, String brand, String plate, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category , String image, Integer loadCapacity, String fuelType, String traction) {
+        super(id, plate, brand, model, price, mileage, status, availability, category, image);
         this.loadCapacity = loadCapacity;
         this.fuelType = fuelType;
         this.traction = traction;

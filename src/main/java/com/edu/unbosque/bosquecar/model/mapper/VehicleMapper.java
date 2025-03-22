@@ -11,6 +11,7 @@ public class VehicleMapper {
 
         VehicleDTO dto = new VehicleDTO();
         dto.setId(vehicle.getId());
+        dto.setPlate(vehicle.getPlate());
         dto.setBrand(vehicle.getBrand());
         dto.setModel(vehicle.getModel());
         dto.setPrice(vehicle.getPrice());
@@ -70,6 +71,7 @@ public class VehicleMapper {
         }
 
         vehicle.setId(dto.getId());
+        vehicle.setPlate(dto.getPlate());
         vehicle.setBrand(dto.getBrand());
         vehicle.setModel(dto.getModel());
         vehicle.setPrice(dto.getPrice());
