@@ -16,8 +16,8 @@ public class VehicleMapper {
         dto.setModel(vehicle.getModel());
         dto.setPrice(vehicle.getPrice());
         dto.setMileage(vehicle.getMileage());
-        dto.setStatus(vehicle.getStatus().name());
-        dto.setAvailability(vehicle.getAvailability().name());
+        dto.setStatus(vehicle.getStatus().name().toUpperCase());
+        dto.setAvailability(vehicle.getAvailability().name().toUpperCase());
         dto.setCategoryId(vehicle.getCategory().getId());
         dto.setImage(vehicle.getImage());
 

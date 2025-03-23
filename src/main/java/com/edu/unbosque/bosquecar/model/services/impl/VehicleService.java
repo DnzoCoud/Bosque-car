@@ -1,10 +1,14 @@
 package com.edu.unbosque.bosquecar.model.services.impl;
 
+import com.edu.unbosque.bosquecar.model.dto.CategoryDTO;
 import com.edu.unbosque.bosquecar.model.dto.VehicleDTO;
+import com.edu.unbosque.bosquecar.model.entities.Vehicle;
 import com.edu.unbosque.bosquecar.model.entities.VehicleDisponibility;
 import com.edu.unbosque.bosquecar.model.entities.VehicleState;
+import com.edu.unbosque.bosquecar.model.mapper.CategoryMapper;
 import com.edu.unbosque.bosquecar.model.mapper.VehicleMapper;
 import com.edu.unbosque.bosquecar.model.persistence.dao.IVehicleDAO;
+import com.edu.unbosque.bosquecar.model.services.abc.ICategoryService;
 import com.edu.unbosque.bosquecar.model.services.abc.IVehicleService;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -18,14 +22,23 @@ public class VehicleService implements IVehicleService {
     @Inject
     private IVehicleDAO vehicleDAO;
 
+    @Inject
+    private ICategoryService categoryService;
+
     @Override
     public void saveVehicle(VehicleDTO vehicle) {
-        vehicleDAO.save(VehicleMapper.toEntity(vehicle));
+        CategoryDTO category = categoryService.getCategory(vehicle.getCategoryId());
+        Vehicle vehicleToSave = VehicleMapper.toEntity(vehicle);
+        vehicleToSave.setCategory(CategoryMapper.toEntity(category));
+        vehicleDAO.save(vehicleToSave);
     }
 
     @Override
     public void updateVehicle(VehicleDTO vehicle) {
-
+        CategoryDTO category = categoryService.getCategory(vehicle.getCategoryId());
+        Vehicle vehicleToSave = VehicleMapper.toEntity(vehicle);
+        vehicleToSave.setCategory(CategoryMapper.toEntity(category));
+        vehicleDAO.update(vehicle.getId(), vehicleToSave);
     }
 
     @Override

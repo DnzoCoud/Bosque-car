@@ -2,11 +2,13 @@ package com.edu.unbosque.bosquecar.model.persistence.impl;
 
 import com.edu.unbosque.bosquecar.model.entities.Quotation;
 import com.edu.unbosque.bosquecar.model.persistence.dao.IQuotationDAO;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
+@Stateless
 public class QuotationDAOImpl implements IQuotationDAO {
 
     @PersistenceContext(name = "BosqueCarPu")

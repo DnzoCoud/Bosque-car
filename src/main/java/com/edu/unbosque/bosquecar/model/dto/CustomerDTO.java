@@ -6,6 +6,8 @@ public class CustomerDTO {
     private String lastName;
     private String email;
 
+    public CustomerDTO(){}
+
     public CustomerDTO( String cedula, String name, String lastName, String email) {
         this.cedula = cedula;
         this.name = name;
@@ -22,4 +24,20 @@ public class CustomerDTO {
         return email;
     }
     public String getCedula() { return cedula; }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

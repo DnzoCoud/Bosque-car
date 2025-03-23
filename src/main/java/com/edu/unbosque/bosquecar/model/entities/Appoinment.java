@@ -7,8 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "cita")
 @NamedQueries({
-        @NamedQuery(name = "Appoinment.findAll", query = "SELECT v FROM Appoinment v")
-
+        @NamedQuery(name = "Appoinment.findAll", query = "SELECT a FROM Appoinment a")
 })
 public class Appoinment {
     @Id

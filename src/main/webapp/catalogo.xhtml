@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Catálogo de Vehículos</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="layout/template.xhtml">
+        <ui:define name="content">
+            <h:form>
+                <p:dataView value="#{catalogoBean.vehiculosDisponibles}" var="vehicle" layout="grid" rows="6" paginator="true" rowsPerPageTemplate="6,12,18">
+                    <p:dataViewGridItem>
+                        <p:card style="width: 250px; margin: 15px;">
+                            <f:facet name="header">
+                                <h:graphicImage value="#{vehicle.image}" style="width: 100%; height: 150px;"/>
+                            </f:facet>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Marca:"/>
+                                <h:outputText value="#{vehicle.brand}"/>
+                                <h:outputText value="Modelo:"/>
+                                <h:outputText value="#{vehicle.model}"/>
+                                <h:outputText value="Precio:"/>
+                                <h:outputText value="#{vehicle.price}" style="font-weight: bold;"/>
+                                <p>Estado: #{vehicle.status}</p>
+                                <p:commandButton value="Solicitar Cita" icon="pi pi-calendar"
+                                                 actionListener="#{catalogoBean.prepararCita(vehicle)}"
+                                                 oncomplete="PF('dlgCita').show()"
+                                                 styleClass="btn btn-primary" />
+                            </h:panelGrid>
+                        </p:card>
+                    </p:dataViewGridItem>
+                </p:dataView>
+            </h:form>
+
+            <!-- Modal para solicitar cita -->
+            <p:dialog header="Solicitar Cita" widgetVar="dlgCita" modal="true" resizable="false">
+                <h:form id="citaDialog">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="nombre" value="Nombre:"/>
+                        <p:inputText id="nombre" value="#{catalogoBean.appoiment.customer.name}" required="true"/>
+
+                        <h:outputLabel for="apellido" value="Apellido:"/>
+                        <p:inputText id="apellido" value="#{catalogoBean.appoiment.customer.lastName}" required="true"/>
+
+                        <h:outputLabel for="cedula" value="Cédula:"/>
+                        <p:inputText id="cedula" value="#{catalogoBean.appoiment.customer.cedula}" required="true"/>
+
+                        <h:outputLabel for="email" value="Correo Electrónico:"/>
+                        <p:inputText id="email" type="email" value="#{catalogoBean.appoiment.customer.email}" required="true"/>
+
+                        <h:outputLabel for="motivo" value="Motivo de la Cita:"/>
+                        <p:inputTextarea id="motivo" value="#{catalogoBean.appoiment.reason}" required="true"/>
+                    </h:panelGrid>
+                    <p:commandButton value="Agendar Cita" action="#{catalogoBean.saveAppointment()}"
+                                     update=":citaDialog" oncomplete="PF('dlgCita').hide()" styleClass="btn btn-success"/>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+
+    </ui:composition>
+
+
+</h:body>
+</html>

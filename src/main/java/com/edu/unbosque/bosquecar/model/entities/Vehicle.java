@@ -1,5 +1,7 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import com.edu.unbosque.bosquecar.model.converters.VehicleDisponibilityConverter;
+import com.edu.unbosque.bosquecar.model.converters.VehicleStateConverter;
 import jakarta.persistence.*;
 import org.hibernate.annotations.DiscriminatorFormula;
 
@@ -42,7 +44,7 @@ public abstract class Vehicle {
     @Column(name = "disponibilidad", nullable = false)
     private VehicleDisponibility availability; // "disponible", "reservado", "vendido"
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_categoria", nullable = false)
     private Category category;
 

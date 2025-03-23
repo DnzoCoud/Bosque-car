@@ -4,7 +4,10 @@ import com.edu.unbosque.bosquecar.model.dto.AppoimentDTO;
 import com.edu.unbosque.bosquecar.model.mapper.AppoinmentMapper;
 import com.edu.unbosque.bosquecar.model.mapper.QuotationMapper;
 import com.edu.unbosque.bosquecar.model.persistence.dao.IAppoimentDAO;
+import com.edu.unbosque.bosquecar.model.persistence.dao.ICustomerDAO;
+import com.edu.unbosque.bosquecar.model.persistence.dao.IVehicleDAO;
 import com.edu.unbosque.bosquecar.model.services.abc.IAppoinmentService;
+import com.edu.unbosque.bosquecar.model.services.abc.ICustomerService;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
@@ -16,6 +19,12 @@ public class AppoinmentService implements IAppoinmentService {
 
     @Inject
     private IAppoimentDAO appoinmentDAO;
+
+    @Inject
+    private ICustomerDAO customerDAO;
+
+    @Inject
+    private IVehicleDAO vehicleDAO;
 
     @Override
     public void saveAppoiment(AppoimentDTO appoinment) {

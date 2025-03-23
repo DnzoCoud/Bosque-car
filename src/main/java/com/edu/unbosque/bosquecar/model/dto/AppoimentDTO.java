@@ -12,6 +12,8 @@ public class AppoimentDTO {
     private String reason;
     private LocalDate date;
 
+    public AppoimentDTO() {}
+
     public AppoimentDTO(int id, CustomerDTO customer, VehicleDTO vehicle, String reason, LocalDate date) {
         this.id = id;
         this.customer = customer;
