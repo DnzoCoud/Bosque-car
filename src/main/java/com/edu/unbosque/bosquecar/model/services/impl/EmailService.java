@@ -55,7 +55,6 @@ public class EmailService implements IEmailService {
         multipart.addBodyPart(bodyPart);
 
         message.setContent(multipart);
-
         Transport.send(message);
     }
     public String loadHtmlTemplate(String fileName) throws IOException {

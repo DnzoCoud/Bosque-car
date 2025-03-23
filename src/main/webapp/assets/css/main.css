@@ -39,4 +39,5 @@ body{
     border-radius: 15px;
     border: 2px solid #dfdfdf;
     padding: 0.5rem;
+    overflow: auto;
 }

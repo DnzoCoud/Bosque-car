@@ -2,9 +2,12 @@ package com.edu.unbosque.bosquecar.view;
 
 import com.edu.unbosque.bosquecar.model.dto.AppoimentDTO;
 import com.edu.unbosque.bosquecar.model.dto.CustomerDTO;
+import com.edu.unbosque.bosquecar.model.dto.QuotationDTO;
 import com.edu.unbosque.bosquecar.model.dto.VehicleDTO;
+import com.edu.unbosque.bosquecar.model.entities.Quotation;
 import com.edu.unbosque.bosquecar.model.entities.VehicleDisponibility;
 import com.edu.unbosque.bosquecar.model.services.abc.IAppoinmentService;
+import com.edu.unbosque.bosquecar.model.services.abc.IQuotationService;
 import com.edu.unbosque.bosquecar.model.services.abc.IVehicleService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
@@ -27,10 +30,13 @@ public class CatalogoBean implements Serializable {
 
     @Inject
     private IAppoinmentService appoinmentService;
+    @Inject
+    private IQuotationService quotationService;
 
     private VehicleDTO selectedVehicle;
     private List<VehicleDTO> vehiculosDisponibles;
     private AppoimentDTO appoiment;
+    private QuotationDTO quotation;
 
     @PostConstruct
     public void init(){
@@ -50,11 +56,27 @@ public class CatalogoBean implements Serializable {
         this.appoiment.setDate(LocalDate.now());
     }
 
+    public void prepareCotizacion(VehicleDTO vehicle){
+        this.selectedVehicle = vehicle;
+        this.quotation = new QuotationDTO();
+        this.quotation.setVehicle(selectedVehicle);
+        this.quotation.setCustomer(new CustomerDTO());
+        this.quotation.setDate(LocalDate.now());
+    }
+
     public void saveAppointment(){
         appoinmentService.saveAppoiment(appoiment);
     }
 
+    public void saveQuotation(){
+        quotationService.saveQuotation(quotation);
+    }
+
     public AppoimentDTO getAppoiment() {
         return appoiment;
+    }
+
+    public QuotationDTO getQuotation() {
+        return quotation;
     }
 }

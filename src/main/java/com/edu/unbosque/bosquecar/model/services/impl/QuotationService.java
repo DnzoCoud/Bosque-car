@@ -3,6 +3,7 @@ package com.edu.unbosque.bosquecar.model.services.impl;
 import com.edu.unbosque.bosquecar.model.dto.QuotationDTO;
 import com.edu.unbosque.bosquecar.model.mapper.QuotationMapper;
 import com.edu.unbosque.bosquecar.model.persistence.dao.IQuotationDAO;
+import com.edu.unbosque.bosquecar.model.services.abc.IEmailService;
 import com.edu.unbosque.bosquecar.model.services.abc.IQuotationService;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -16,9 +17,26 @@ public class QuotationService implements IQuotationService {
     @Inject
     private IQuotationDAO quotationDAO;
 
+    @Inject
+    private IEmailService emailService;
+
     @Override
     public void saveQuotation(QuotationDTO quotation) {
-        quotationDAO.save(QuotationMapper.toEntity(quotation));
+
+        try {
+            quotationDAO.save(QuotationMapper.toEntity(quotation));
+            String template = emailService.loadHtmlTemplate("cotizacion_email_template.html");
+            String htmlContent = template.replace("{{name}}", quotation.getCustomer().getName())
+                    .replace("{{vehicle}}", String.format("%s %s - %s", quotation.getVehicle().getPlate() ,quotation.getVehicle().getBrand(), quotation.getVehicle().getModel()))
+                    .replace("{{brand}}", quotation.getVehicle().getBrand())
+                    .replace("{{model}}", quotation.getVehicle().getModel())
+                    .replace("{{price}}", String.valueOf(quotation.getVehicle().getPrice()))
+                    .replace("{{date}}", quotation.getDate().toString());
+
+            emailService.sendEmail(quotation.getCustomer().getEmail(), "Cotización", htmlContent);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
