@@ -10,6 +10,12 @@
     align-items: center;
     padding: 0.2rem;
     overflow: hidden;
+    flex-shrink: 0;
+}
+
+.sidebar nav ul{
+    margin: 0;
+    padding: 0;
 }
 
 .sidebar .sidebar__head{

@@ -6,49 +6,47 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("2")
+@DiscriminatorValue("FAMILIAR")
 public class FamilyVehicle extends Vehicle {
-    @Column(name = "capacidad_carga")
-    private Integer loadCapacity;
+    @Column(name = "capacidad_pasajeros")
+    private Integer passengerCapacity;
 
-    @Column(name = "tipo_combustible")
-    private String fuelType;
+    @Column(name = "sistema_seguridad")
+    private String securitySystem;
 
-    @Column(name = "traccion")
-    private String traction;
+    @Column(name = "confort")
+    private String confort;
 
-    public FamilyVehicle(){
-        super();
+    public FamilyVehicle(){}
+
+    public FamilyVehicle(Integer id, String brand, String plate, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, String image, Integer passengerCapacity, String securitySystem, String confort) {
+        super(id, plate, brand, model, price, mileage, status, availability, category, image);
+        this.passengerCapacity = passengerCapacity;
+        this.securitySystem = securitySystem;
+        this.confort = confort;
     }
 
-    public FamilyVehicle(Integer id, String brand, String model, Double price, Integer mileage, VehicleState status, VehicleDisponibility availability, Category category, Integer loadCapacity, String fuelType, String traction) {
-        super(id, brand, model, price, mileage, status, availability, category);
-        this.loadCapacity = loadCapacity;
-        this.fuelType = fuelType;
-        this.traction = traction;
+    public Integer getPassengerCapacity() {
+        return passengerCapacity;
     }
 
-    public Integer getLoadCapacity() {
-        return loadCapacity;
+    public void setPassengerCapacity(Integer passengerCapacity) {
+        this.passengerCapacity = passengerCapacity;
     }
 
-    public void setLoadCapacity(Integer loadCapacity) {
-        this.loadCapacity = loadCapacity;
+    public String getSecuritySystem() {
+        return securitySystem;
     }
 
-    public String getFuelType() {
-        return fuelType;
+    public void setSecuritySystem(String securitySystem) {
+        this.securitySystem = securitySystem;
     }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
+    public String getConfort() {
+        return confort;
     }
 
-    public String getTraction() {
-        return traction;
-    }
-
-    public void setTraction(String traction) {
-        this.traction = traction;
+    public void setConfort(String confort) {
+        this.confort = confort;
     }
 }

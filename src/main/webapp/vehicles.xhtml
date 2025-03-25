@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="layout/template.xhtml">
+        <ui:define name="content">
+
+            <h:form id="filterForm">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Registrar Vehículo" icon="pi pi-plus"
+                                         actionListener="#{vehicleBean.openModal}"
+                                         update=":modalVehicle" oncomplete="PF('vehicleDialog').show()"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:panelGrid columns="3" style="margin-bottom: 10px;">
+                    <p:outputLabel for="estado" value="Estado:" />
+                    <p:selectOneMenu id="estado" value="#{vehicleBean.selectedState}">
+                        <f:selectItem itemLabel="Todos" itemValue="" />
+                        <f:selectItems value="#{vehicleBean.vehicleStates}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="disponibilidad" value="Disponibilidad:" />
+                    <p:selectOneMenu id="disponibilidad" value="#{vehicleBean.selectedAvailability}">
+                        <f:selectItem itemLabel="Todos" itemValue="" />
+                        <f:selectItems value="#{vehicleBean.vehicleAvailability}" />
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Filtrar" update="vehiculoDataView" actionListener="#{vehicleBean.filterVehicles}" />
+                </p:panelGrid>
+            </h:form>
+
+            <h:form id="vehiculoDataView">
+                <p:growl id="messages" showDetail="true"/>
+                <p:dataView value="#{vehicleBean.filteredVehicles}" var="vehicle" layout="grid"
+                            rows="6" paginator="true" rowsPerPageTemplate="6,12,18">
+                    <p:dataViewGridItem>
+                        <p:card style="width: 250px; margin: 15px;">
+                            <f:facet name="header">
+                                <h:graphicImage value=".#{vehicle.image != null ? '/resources/vehicles/' + vehicle.image : '/resources/vehicles/vehicle.jpg'}"
+                                                style="width: 100%; height: 150px;" />
+                            </f:facet>
+                            <div>
+                                <p:commandButton value="" icon="pi pi-pencil"
+                                                 actionListener="#{vehicleBean.prepareForUpdate(vehicle.id)}"
+                                                 update=":updateVehicle" oncomplete="PF('updateVehicleDialog').show()"
+                                />
+                            </div>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Estado:"/>
+                                <p:badge value="#{vehicle.status}" styleClass="mr-2"/>
+                                <h:outputText value="Disponibilidad:"/>
+                                <p:badge value="#{vehicle.availability}" styleClass="mr-2"/>
+                                <h:outputText value="Placa:"/>
+                                <h:outputText value="#{vehicle.plate}"/>
+                                <h:outputText value="Marca:"/>
+                                <h:outputText value="#{vehicle.brand}"/>
+                                <h:outputText value="Modelo:"/>
+                                <h:outputText value="#{vehicle.model}"/>
+                                <h:outputText value="Precio:"/>
+                                <h:outputText value="$#{vehicle.price}" style="font-weight: bold;"/>
+                                <h:outputText value="Categoria:"/>
+                                <h:outputText value="#{vehicleBean.getCategoryName(vehicle.categoryId)}" style="font-weight: bold;"/>
+                            </h:panelGrid>
+                        </p:card>
+                    </p:dataViewGridItem>
+                </p:dataView>
+            </h:form>
+
+            <!-- Modal de Registro -->
+            <p:dialog header="Registrar Vehículo" widgetVar="vehicleDialog" modal="true" resizable="false" id="modalVehicle">
+                <h:form id="registerForm"  enctype="multipart/form-data">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="plate" value="Placa:"/>
+                        <p:inputText id="plate" value="#{vehicleBean.newVehicle.plate}" required="true" maxlength="6"/>
+
+                        <h:outputLabel for="brand" value="Marca:"/>
+                        <p:inputText id="brand" value="#{vehicleBean.newVehicle.brand}" required="true"/>
+
+                        <h:outputLabel for="model" value="Modelo:"/>
+                        <p:inputText id="model" value="#{vehicleBean.newVehicle.model}" required="true"/>
+
+                        <h:outputLabel for="price" value="Precio:"/>
+                        <p:inputNumber id="price" value="#{vehicleBean.newVehicle.price}" required="true"/>
+
+                        <h:outputLabel for="mileage" value="Kilometraje:"/>
+                        <p:inputNumber id="mileage" value="#{vehicleBean.newVehicle.mileage}" required="true"/>
+
+                        <p:outputLabel for="category" value="Categoría:" />
+                        <p:selectOneMenu id="category" value="#{vehicleBean.newVehicle.categoryId}">
+                            <p:ajax update="dynamicFields" />
+                            <f:selectItem itemLabel="Seleccione una categoría" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.categories}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat.id}" />
+                        </p:selectOneMenu>
+                        <h:panelGroup id="dynamicFields">
+                            <h:panelGrid columns="2" rendered="#{vehicleBean.isCargoVehicle()}">
+                                <p:outputLabel for="cargoCapacity" value="Capacidad de Carga:" />
+                                <p:inputText id="cargoCapacity" value="#{vehicleBean.newVehicle.cargoCapacity}" />
+
+                                <p:outputLabel for="fuelType" value="Tipo de Combustible:" />
+                                <p:inputText id="fuelType" value="#{vehicleBean.newVehicle.fuelType}" />
+
+                                <p:outputLabel for="traction" value="Tracción:" />
+                                <p:inputText id="traction" value="#{vehicleBean.newVehicle.traction}" />
+                            </h:panelGrid>
+                            <!-- Family Vehicle -->
+                            <h:panelGrid columns="2" rendered="#{vehicleBean.isFamilyVehicle()}">
+                                <p:outputLabel for="passengerCapacity" value="Capacidad de Pasajeros:" />
+                                <p:inputText id="passengerCapacity" value="#{vehicleBean.newVehicle.passengerCapacity}" />
+
+                                <p:outputLabel for="securitySystem" value="Sistema de Seguridad:" />
+                                <p:inputText id="securitySystem" value="#{vehicleBean.newVehicle.securitySystem}" />
+
+                                <p:outputLabel for="confort" value="Confort:" />
+                                <p:inputText id="confort" value="#{vehicleBean.newVehicle.confort}" />
+                            </h:panelGrid>
+
+                            <!-- Utility Vehicle -->
+                            <h:panelGrid columns="2" rendered="#{vehicleBean.isUtilityVehicle()}">
+                                <p:outputLabel for="trunkSize" value="Tamaño del Maletero:" />
+                                <p:inputText id="trunkSize" value="#{vehicleBean.newVehicle.trunkSize}" />
+
+                                <p:outputLabel for="specialEquipment" value="Equipo Especial:" />
+                                <p:inputText id="specialEquipment" value="#{vehicleBean.newVehicle.specialEquipment}" />
+
+                                <p:outputLabel for="versatility" value="Versatilidad:" />
+                                <p:inputText id="versatility" value="#{vehicleBean.newVehicle.versatility}" />
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{vehicleBean.saveVehicle}"
+                                     update="vehiculoDataView" oncomplete="PF('vehicleDialog').hide()"/>
+                </h:form>
+            </p:dialog>
+
+            <!-- MODAL DE ACTUALIZACION -->
+            <p:dialog header="Actualizar Vehiculo" widgetVar="updateVehicleDialog" modal="true" resizable="false" id="updateVehicle">
+                <h:form>
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="update_plate" value="Placa:"/>
+                        <p:inputText id="update_plate" value="#{vehicleBean.newVehicle.plate}" required="true" maxlength="6"/>
+
+                        <h:outputLabel for="update_brand" value="Marca:"/>
+                        <p:inputText id="update_brand" value="#{vehicleBean.newVehicle.brand}" required="true"/>
+
+                        <h:outputLabel for="update_model" value="Modelo:"/>
+                        <p:inputText id="update_model" value="#{vehicleBean.newVehicle.model}" required="true"/>
+
+                        <h:outputLabel for="update_price" value="Precio:"/>
+                        <p:inputNumber id="update_price" value="#{vehicleBean.newVehicle.price}" required="true"/>
+
+                        <h:outputLabel for="update_mileage" value="Kilometraje:"/>
+                        <p:inputNumber id="update_mileage" value="#{vehicleBean.newVehicle.mileage}" required="true"/>
+
+                        <p:outputLabel for="status" value="Estado:" />
+                        <p:selectOneMenu id="status" value="#{vehicleBean.newVehicle.status}">
+                            <p:ajax update="update_dynamicFields" />
+                            <f:selectItem itemLabel="Seleccione un estado" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.getVehicleStates()}" var="state" itemLabel="#{state}" itemValue="#{state}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="disponibility" value="Disponibilidad:" />
+                        <p:selectOneMenu id="disponibility" value="#{vehicleBean.newVehicle.availability}">
+                            <p:ajax update="update_dynamicFields" />
+                            <f:selectItem itemLabel="Seleccione una disponibilidad" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.getVehicleAvailability()}" var="dispo" itemLabel="#{dispo}" itemValue="#{dispo}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="update_category" value="Categoría:" />
+                        <p:selectOneMenu id="update_category" value="#{vehicleBean.newVehicle.categoryId}">
+                            <p:ajax update="update_dynamicFields" />
+                            <f:selectItem itemLabel="Seleccione una categoría" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.categories}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat.id}" />
+                        </p:selectOneMenu>
+
+                        <h:panelGroup id="update_dynamicFields">
+                            <h:panelGrid columns="2" rendered="#{vehicleBean.isCargoVehicle()}">
+                                <p:outputLabel for="update_cargoCapacity" value="Capacidad de Carga:" />
+                                <p:inputText id="update_cargoCapacity" value="#{vehicleBean.newVehicle.cargoCapacity}" />
+
+                                <p:outputLabel for="update_fuelType" value="Tipo de Combustible:" />
+                                <p:inputText id="update_fuelType" value="#{vehicleBean.newVehicle.fuelType}" />
+
+                                <p:outputLabel for="update_traction" value="Tracción:" />
+                                <p:inputText id="update_traction" value="#{vehicleBean.newVehicle.traction}" />
+                            </h:panelGrid>
+                            <!-- Family Vehicle -->
+                            <h:panelGrid columns="2" rendered="#{vehicleBean.isFamilyVehicle()}">
+                                <p:outputLabel for="update_passengerCapacity" value="Capacidad de Pasajeros:" />
+                                <p:inputText id="update_passengerCapacity" value="#{vehicleBean.newVehicle.passengerCapacity}" />
+
+                                <p:outputLabel for="update_securitySystem" value="Sistema de Seguridad:" />
+                                <p:inputText id="update_securitySystem" value="#{vehicleBean.newVehicle.securitySystem}" />
+
+                                <p:outputLabel for="update_confort" value="Confort:" />
+                                <p:inputText id="update_confort" value="#{vehicleBean.newVehicle.confort}" />
+                            </h:panelGrid>
+
+                            <!-- Utility Vehicle -->
+                            <h:panelGrid columns="2" rendered="#{vehicleBean.isUtilityVehicle()}">
+                                <p:outputLabel for="update_trunkSize" value="Tamaño del Maletero:" />
+                                <p:inputText id="update_trunkSize" value="#{vehicleBean.newVehicle.trunkSize}" />
+
+                                <p:outputLabel for="update_specialEquipment" value="Equipo Especial:" />
+                                <p:inputText id="update_specialEquipment" value="#{vehicleBean.newVehicle.specialEquipment}" />
+
+                                <p:outputLabel for="update_versatility" value="Versatilidad:" />
+                                <p:inputText id="update_versatility" value="#{vehicleBean.newVehicle.versatility}" />
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <p:commandButton value="Actualizar" icon="pi pi-check"
+                                     actionListener="#{vehicleBean.updateVehicle}"
+                                     update="vehiculoDataView"
+                                     oncomplete="PF('updateVehicleDialog').hide()"/>
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

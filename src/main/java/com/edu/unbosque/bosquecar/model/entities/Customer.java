@@ -1,26 +1,30 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "cliente")
+@NamedQueries({
+        @NamedQuery(name = "Customer.findAll", query = "SELECT v FROM Customer v"),
+        @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
+})
 public class Customer {
-    private int id;
+    @Id
+    private String cedula;
+    @Column(name = "nombre")
     private String name;
+    @Column(name = "apellido")
     private String lastName;
-    private int document;
     private String email;
 
-    public Customer(int id, String name, String lastName, int document, String email) {
-        this.id = id;
+    public Customer(){
+
+    }
+    public Customer(String cedula, String name, String lastName, String email) {
+        this.cedula = cedula;
         this.name = name;
         this.lastName = lastName;
-        this.document = document;
         this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -35,18 +39,17 @@ public class Customer {
         return lastName;
     }
 
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public int getDocument() {
-        return document;
-    }
-
-    public void setDocument(int document) {
-        this.document = document;
-    }
-
     public String getEmail() {
         return email;
     }
