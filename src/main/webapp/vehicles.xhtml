@@ -9,7 +9,8 @@
 <h:body>
     <ui:composition template="layout/template.xhtml">
         <ui:define name="content">
-            <h:form id="vehicleForm">
+
+            <h:form id="filterForm">
                 <p:toolbar>
                     <p:toolbarGroup>
                         <p:commandButton value="Registrar Vehículo" icon="pi pi-plus"
@@ -17,19 +18,37 @@
                                          update=":modalVehicle" oncomplete="PF('vehicleDialog').show()"/>
                     </p:toolbarGroup>
                 </p:toolbar>
+                <p:panelGrid columns="3" style="margin-bottom: 10px;">
+                    <p:outputLabel for="estado" value="Estado:" />
+                    <p:selectOneMenu id="estado" value="#{vehicleBean.selectedState}">
+                        <f:selectItem itemLabel="Todos" itemValue="" />
+                        <f:selectItems value="#{vehicleBean.vehicleStates}" />
+                    </p:selectOneMenu>
 
+                    <p:outputLabel for="disponibilidad" value="Disponibilidad:" />
+                    <p:selectOneMenu id="disponibilidad" value="#{vehicleBean.selectedAvailability}">
+                        <f:selectItem itemLabel="Todos" itemValue="" />
+                        <f:selectItems value="#{vehicleBean.vehicleAvailability}" />
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Filtrar" update="vehiculoDataView" actionListener="#{vehicleBean.filterVehicles}" />
+                </p:panelGrid>
+            </h:form>
+
+            <h:form id="vehiculoDataView">
                 <p:growl id="messages" showDetail="true"/>
-                <p:dataView value="#{vehicleBean.vehicles}" var="vehicle" layout="grid"
+                <p:dataView value="#{vehicleBean.filteredVehicles}" var="vehicle" layout="grid"
                             rows="6" paginator="true" rowsPerPageTemplate="6,12,18">
                     <p:dataViewGridItem>
                         <p:card style="width: 250px; margin: 15px;">
                             <f:facet name="header">
-                                <h:graphicImage value=".#{vehicle.image != null ? '/resources/vehicles/' + vehicle.image : '/resources/vehicles/vehicle.jpg'}"  style="width: 100%; height: 150px;" />
+                                <h:graphicImage value=".#{vehicle.image != null ? '/resources/vehicles/' + vehicle.image : '/resources/vehicles/vehicle.jpg'}"
+                                                style="width: 100%; height: 150px;" />
                             </f:facet>
                             <div>
                                 <p:commandButton value="" icon="pi pi-pencil"
-                                    actionListener="#{vehicleBean.prepareForUpdate(vehicle.id)}"
-                                    update=":updateVehicle" oncomplete="PF('updateVehicleDialog').show()"
+                                                 actionListener="#{vehicleBean.prepareForUpdate(vehicle.id)}"
+                                                 update=":updateVehicle" oncomplete="PF('updateVehicleDialog').show()"
                                 />
                             </div>
                             <h:panelGrid columns="2" style="width: 100%">
@@ -118,7 +137,7 @@
 
                     <p:commandButton value="Guardar" icon="pi pi-check"
                                      actionListener="#{vehicleBean.saveVehicle}"
-                                     update="vehicleForm" oncomplete="PF('vehicleDialog').hide()"/>
+                                     update="vehiculoDataView" oncomplete="PF('vehicleDialog').hide()"/>
                 </h:form>
             </p:dialog>
 
@@ -202,7 +221,7 @@
 
                     <p:commandButton value="Actualizar" icon="pi pi-check"
                                      actionListener="#{vehicleBean.updateVehicle}"
-                                     update="vehicleForm"
+                                     update="vehiculoDataView"
                                      oncomplete="PF('updateVehicleDialog').hide()"/>
                 </h:form>
             </p:dialog>

@@ -19,6 +19,7 @@ import org.primefaces.model.file.UploadedFile;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,12 +39,22 @@ public class VehicleBean implements Serializable {
     private List<VehicleDTO> vehicles;
     private VehicleDTO newVehicle = new VehicleDTO();
     private List<CategoryDTO> categories;
-
+    private List<VehicleDTO> filteredVehicles;
+    private String selectedState;
+    private String selectedAvailability;
 
     @PostConstruct
     public void init() {
         vehicles = vehicleService.getAllVehicles();
+        filteredVehicles = new ArrayList<>(vehicles);
     }
+    public void filterVehicles() {
+        filteredVehicles = vehicles.stream()
+                .filter(v -> (selectedState == null || selectedState.isEmpty() || v.getStatus().equals(selectedState)))
+                .filter(v -> (selectedAvailability == null || selectedAvailability.isEmpty() || v.getAvailability().equals(selectedAvailability)))
+                .collect(Collectors.toList());
+    }
+
 
 
     public void openModal() {
@@ -64,7 +75,7 @@ public class VehicleBean implements Serializable {
             }
             vehicleService.saveVehicle(newVehicle);
             newVehicle = new VehicleDTO();
-            vehicles = vehicleService.getAllVehicles();
+            filteredVehicles = vehicleService.getAllVehicles();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Vehículo registrado", ""));
 
     }
@@ -72,7 +83,7 @@ public class VehicleBean implements Serializable {
     public void updateVehicle(){
         vehicleService.updateVehicle(newVehicle);
         newVehicle = new VehicleDTO();
-        this.vehicles = vehicleService.getAllVehicles();
+        filteredVehicles = vehicleService.getAllVehicles();
     }
 
     public List<String> getVehicleStates() {
@@ -107,4 +118,24 @@ public class VehicleBean implements Serializable {
     public List<VehicleDTO> getVehicles() { return vehicles; }
     public VehicleDTO getNewVehicle() { return newVehicle; }
     public List<CategoryDTO> getCategories() {return categories;}
+
+    public String getSelectedState() {
+        return selectedState;
+    }
+
+    public void setSelectedState(String selectedState) {
+        this.selectedState = selectedState;
+    }
+
+    public String getSelectedAvailability() {
+        return selectedAvailability;
+    }
+
+    public void setSelectedAvailability(String selectedAvailability) {
+        this.selectedAvailability = selectedAvailability;
+    }
+
+    public List<VehicleDTO> getFilteredVehicles() {
+        return filteredVehicles;
+    }
 }
