@@ -4,6 +4,8 @@ import com.edu.unbosque.bosquecar.model.dto.VehicleDTO;
 import com.edu.unbosque.bosquecar.model.entities.Vehicle;
 import com.edu.unbosque.bosquecar.model.entities.VehicleDisponibility;
 import com.edu.unbosque.bosquecar.model.entities.VehicleState;
+import jakarta.servlet.http.Part;
+import org.primefaces.model.file.UploadedFile;
 
 import java.util.List;
 

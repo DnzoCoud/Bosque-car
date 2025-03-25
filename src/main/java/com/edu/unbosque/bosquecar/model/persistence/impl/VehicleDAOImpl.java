@@ -7,6 +7,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -22,50 +23,72 @@ public class VehicleDAOImpl implements IVehicleDAO {
     }
 
     @Override
+    @Transactional
     public void update(Integer id, Vehicle entity) {
-        Vehicle vehicle = this.findById(id);
-        if (vehicle != null) {
-            // Obtén la categoría gestionada
-            Category category = null;
+        Vehicle existingVehicle = this.findById(id);
+        if (existingVehicle != null) {
+            existingVehicle.setPlate(entity.getPlate());
+            existingVehicle.setBrand(entity.getBrand());
+            existingVehicle.setModel(entity.getModel());
+            existingVehicle.setPrice(entity.getPrice());
+            existingVehicle.setMileage(entity.getMileage());
+
+            if (entity.getStatus() != null) {
+                existingVehicle.setStatus(entity.getStatus());
+            }
+            if (entity.getAvailability() != null) {
+                existingVehicle.setAvailability(entity.getAvailability());
+            }
+            existingVehicle.setImage(entity.getImage());
+
             if (entity.getCategory() != null && entity.getCategory().getId() != null) {
-                category = em.find(Category.class, entity.getCategory().getId());
+                Category category = em.find(Category.class, entity.getCategory().getId());
+                if (!existingVehicle.getCategory().getId().equals(category.getId())) {
+                    if (existingVehicle instanceof FamilyVehicle) {
+                        FamilyVehicle existingFamilyVehicle = (FamilyVehicle) existingVehicle;
+                        existingFamilyVehicle.setPassengerCapacity(null);
+                        existingFamilyVehicle.setSecuritySystem(null);
+                        existingFamilyVehicle.setConfort(null);
+                    } else if (existingVehicle instanceof CargoVehicle) {
+                        CargoVehicle existingCargoVehicle = (CargoVehicle) existingVehicle;
+                        existingCargoVehicle.setLoadCapacity(null);
+                        existingCargoVehicle.setFuelType(null);
+                        existingCargoVehicle.setTraction(null);
+                    } else if (existingVehicle instanceof UtilityVehicle) {
+                        UtilityVehicle existingUtilityVehicle = (UtilityVehicle) existingVehicle;
+                        existingUtilityVehicle.setTrunkSize(null);
+                        existingUtilityVehicle.setSpecialEquipment(null);
+                        existingUtilityVehicle.setVersatility(null);
+                    }
+                }
+                existingVehicle.setCategory(category);
             }
 
-            entity = em.merge(entity);
+            if (existingVehicle instanceof FamilyVehicle && entity instanceof FamilyVehicle) {
+                FamilyVehicle existingFamilyVehicle = (FamilyVehicle) existingVehicle;
+                FamilyVehicle newFamilyVehicle = (FamilyVehicle) entity;
 
-            // Actualiza los campos de vehicle con los valores de entity
-            vehicle.setPlate(entity.getPlate());
-            vehicle.setBrand(entity.getBrand());
-            vehicle.setModel(entity.getModel());
-            vehicle.setPrice(entity.getPrice());
-            vehicle.setMileage(entity.getMileage());
-            vehicle.setStatus(entity.getStatus());
-            vehicle.setAvailability(entity.getAvailability());
-            vehicle.setImage(entity.getImage());
+                existingFamilyVehicle.setPassengerCapacity(newFamilyVehicle.getPassengerCapacity());
+                existingFamilyVehicle.setSecuritySystem(newFamilyVehicle.getSecuritySystem());
+                existingFamilyVehicle.setConfort(newFamilyVehicle.getConfort());
+            } else if (existingVehicle instanceof CargoVehicle && entity instanceof CargoVehicle) {
+                CargoVehicle existingCargo = (CargoVehicle) existingVehicle;
+                CargoVehicle newCargoVehicle = (CargoVehicle) entity;
 
-            // Asigna la categoría gestionada
-            if (category != null) {
-                vehicle.setCategory(category);
-            }
-            entity.setId(id);
+                existingCargo.setLoadCapacity(newCargoVehicle.getLoadCapacity());
+                existingCargo.setFuelType(newCargoVehicle.getFuelType());
+                existingCargo.setTraction(newCargoVehicle.getTraction());
+            } else{
+                UtilityVehicle existingUtility = (UtilityVehicle) existingVehicle;
+                UtilityVehicle newUtility = (UtilityVehicle) entity;
 
-            if (vehicle instanceof FamilyVehicle existingFamily && entity instanceof FamilyVehicle newFamily) {
-                existingFamily.setPassengerCapacity(newFamily.getPassengerCapacity());
-                existingFamily.setSecuritySystem(newFamily.getSecuritySystem());
-                existingFamily.setConfort(newFamily.getConfort());
+                existingUtility.setTrunkSize(newUtility.getTrunkSize());
+                existingUtility.setSpecialEquipment(newUtility.getSpecialEquipment());
+                existingUtility.setVersatility(newUtility.getVersatility());
             }
-            else if (vehicle instanceof CargoVehicle cargoVehicle && entity instanceof CargoVehicle newSport) {
-                cargoVehicle.setLoadCapacity(newSport.getLoadCapacity());
-                cargoVehicle.setFuelType(newSport.getFuelType());
-                cargoVehicle.setTraction(newSport.getTraction());
-            }
-            else if (vehicle instanceof UtilityVehicle existingUtility && entity instanceof UtilityVehicle newCargo) {
-                existingUtility.setTrunkSize(newCargo.getTrunkSize());
-                existingUtility.setSpecialEquipment(newCargo.getSpecialEquipment());
-                existingUtility.setVersatility(newCargo.getVersatility());
-            }
-            // Guarda los cambios
-            em.merge(vehicle);
+
+            em.merge(existingVehicle);
+            em.flush();
         }
     }
 

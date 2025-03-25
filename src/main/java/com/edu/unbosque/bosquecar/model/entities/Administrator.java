@@ -1,12 +1,12 @@
 package com.edu.unbosque.bosquecar.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "administrador")
+@NamedQueries({
+        @NamedQuery(name = "Administrator.findByEmail", query = "SELECT a FROM Administrator a WHERE a.email = :email")
+})
 public class Administrator {
     @Id
     @Column(name = "id_admin")

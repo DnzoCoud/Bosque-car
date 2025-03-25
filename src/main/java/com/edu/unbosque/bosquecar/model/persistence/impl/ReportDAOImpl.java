@@ -19,7 +19,7 @@ public class ReportDAOImpl implements IReportDAO {
     @Override
     public List<VehicleReport> getMostRequestedVehicles() {
         String query = """
-            SELECT v.id, v.brand, v.model, COUNT(c.id) AS quoteCount, COUNT(a.id) AS appoCount
+            SELECT v.id, v.brand, v.model, COUNT(DISTINCT c.id) AS quoteCount, COUNT(DISTINCT a.id) AS appoCount
             FROM Vehicle v
             LEFT JOIN Quotation c ON c.vehicle.id = v.id
             LEFT JOIN Appoinment a ON a.vehicle.id = v.id

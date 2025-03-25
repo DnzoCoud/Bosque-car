@@ -11,8 +11,20 @@ import com.edu.unbosque.bosquecar.model.persistence.dao.IVehicleDAO;
 import com.edu.unbosque.bosquecar.model.services.abc.ICategoryService;
 import com.edu.unbosque.bosquecar.model.services.abc.IVehicleService;
 import jakarta.ejb.Stateless;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.Part;
+import org.primefaces.model.file.UploadedFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +39,10 @@ public class VehicleService implements IVehicleService {
 
     @Override
     public void saveVehicle(VehicleDTO vehicle) {
-        CategoryDTO category = categoryService.getCategory(vehicle.getCategoryId());
-        Vehicle vehicleToSave = VehicleMapper.toEntity(vehicle);
-        vehicleToSave.setCategory(CategoryMapper.toEntity(category));
-        vehicleDAO.save(vehicleToSave);
+            CategoryDTO category = categoryService.getCategory(vehicle.getCategoryId());
+            Vehicle vehicleToSave = VehicleMapper.toEntity(vehicle);
+            vehicleToSave.setCategory(CategoryMapper.toEntity(category));
+            vehicleDAO.save(vehicleToSave);
     }
 
     @Override
@@ -40,6 +52,7 @@ public class VehicleService implements IVehicleService {
         vehicleToSave.setCategory(CategoryMapper.toEntity(category));
         vehicleDAO.update(vehicle.getId(), vehicleToSave);
     }
+
 
     @Override
     public void deleteVehicle(Integer id) {

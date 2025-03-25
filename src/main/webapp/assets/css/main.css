@@ -29,7 +29,7 @@ body{
 
 }
 
-.container{
+.container__app{
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -38,6 +38,8 @@ body{
     background-color: #ffffff;
     border-radius: 15px;
     border: 2px solid #dfdfdf;
-    padding: 0.5rem;
     overflow: auto;
+}
+.container__app .content{
+    padding: 0.5rem;
 }

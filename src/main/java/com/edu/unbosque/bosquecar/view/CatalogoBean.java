@@ -6,6 +6,7 @@ import com.edu.unbosque.bosquecar.model.dto.QuotationDTO;
 import com.edu.unbosque.bosquecar.model.dto.VehicleDTO;
 import com.edu.unbosque.bosquecar.model.entities.Quotation;
 import com.edu.unbosque.bosquecar.model.entities.VehicleDisponibility;
+import com.edu.unbosque.bosquecar.model.entities.VehicleState;
 import com.edu.unbosque.bosquecar.model.services.abc.IAppoinmentService;
 import com.edu.unbosque.bosquecar.model.services.abc.IQuotationService;
 import com.edu.unbosque.bosquecar.model.services.abc.IVehicleService;

@@ -20,7 +20,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
     }
 
     @Override
-    public void update(Integer id, Customer entity) {
+    public void update(String id, Customer entity) {
         Customer customer = this.findById(id);
         if (customer != null) {
             em.merge(customer);
@@ -28,7 +28,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(String id) {
         Customer customer = this.findById(id);
         if (customer != null) {
             em.remove(customer);
@@ -36,7 +36,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
     }
 
     @Override
-    public Customer findById(Integer id) {
+    public Customer findById(String id) {
         return em.find(Customer.class, id);
     }
 

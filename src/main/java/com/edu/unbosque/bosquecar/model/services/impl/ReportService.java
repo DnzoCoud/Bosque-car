@@ -18,6 +18,8 @@ public class ReportService implements IReportService {
 
     @Override
     public List<VehicleReportDTO> getMostRequestedVehicles() {
-        return reportDAO.getMostRequestedVehicles().stream().map(VehicleReportMapper::toDto).collect(Collectors.toList());
+        return reportDAO.getMostRequestedVehicles()
+                .stream().map(VehicleReportMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

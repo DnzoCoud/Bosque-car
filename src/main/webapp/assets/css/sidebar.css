@@ -13,6 +13,11 @@
     flex-shrink: 0;
 }
 
+.sidebar nav ul{
+    margin: 0;
+    padding: 0;
+}
+
 .sidebar .sidebar__head{
     width: 100%;
     height: 4rem;

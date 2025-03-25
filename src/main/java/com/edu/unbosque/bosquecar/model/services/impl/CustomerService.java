@@ -29,12 +29,12 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void deleteCustomer(Integer id) {
+    public void deleteCustomer(String id) {
     customerDAO.delete(id);
     }
 
     @Override
-    public CustomerDTO getCustomerById(Integer id) {
+    public CustomerDTO getCustomerById(String id) {
         return CustomerMapper.toDto(customerDAO.findById(id));
     }
 

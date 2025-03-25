@@ -27,12 +27,15 @@ public class AppoimentDAOImpl implements IAppoimentDAO {
     @Override
     public void save(Appoinment entity) {
         Vehicle vehicle = vehicleDAO.findById(entity.getVehicle().getId());
-        Customer customer = customerDAO.findByEmail(entity.getCustomer().getEmail());
-        if (customer == null) {
-            entity.setCustomer(customerDAO.saveAndReturn(entity.getCustomer()));
+        if (vehicle != null) {
+            Customer customer = customerDAO.findById(entity.getCustomer().getCedula());
+            if (customer == null) {
+                entity.setCustomer(customerDAO.saveAndReturn(entity.getCustomer()));
+            }
+            entity.setVehicle(vehicle);
+            em.persist(entity);
         }
-        entity.setVehicle(vehicle);
-        em.persist(entity);
+
     }
 
     @Override

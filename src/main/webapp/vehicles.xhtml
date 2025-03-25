@@ -24,7 +24,7 @@
                     <p:dataViewGridItem>
                         <p:card style="width: 250px; margin: 15px;">
                             <f:facet name="header">
-                                <h:graphicImage value="#{vehicle.image}" style="width: 100%; height: 150px;"/>
+                                <h:graphicImage value=".#{vehicle.image != null ? '/resources/vehicles/' + vehicle.image : '/resources/vehicles/vehicle.jpg'}"  style="width: 100%; height: 150px;" />
                             </f:facet>
                             <div>
                                 <p:commandButton value="" icon="pi pi-pencil"
@@ -33,12 +33,20 @@
                                 />
                             </div>
                             <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Estado:"/>
+                                <p:badge value="#{vehicle.status}" styleClass="mr-2"/>
+                                <h:outputText value="Disponibilidad:"/>
+                                <p:badge value="#{vehicle.availability}" styleClass="mr-2"/>
+                                <h:outputText value="Placa:"/>
+                                <h:outputText value="#{vehicle.plate}"/>
                                 <h:outputText value="Marca:"/>
                                 <h:outputText value="#{vehicle.brand}"/>
                                 <h:outputText value="Modelo:"/>
                                 <h:outputText value="#{vehicle.model}"/>
                                 <h:outputText value="Precio:"/>
-                                <h:outputText value="#{vehicle.price}" style="font-weight: bold;"/>
+                                <h:outputText value="$#{vehicle.price}" style="font-weight: bold;"/>
+                                <h:outputText value="Categoria:"/>
+                                <h:outputText value="#{vehicleBean.getCategoryName(vehicle.categoryId)}" style="font-weight: bold;"/>
                             </h:panelGrid>
                         </p:card>
                     </p:dataViewGridItem>
@@ -47,7 +55,7 @@
 
             <!-- Modal de Registro -->
             <p:dialog header="Registrar Vehículo" widgetVar="vehicleDialog" modal="true" resizable="false" id="modalVehicle">
-                <h:form id="registerForm">
+                <h:form id="registerForm"  enctype="multipart/form-data">
                     <h:panelGrid columns="2" cellpadding="5">
 
                         <h:outputLabel for="plate" value="Placa:"/>
@@ -71,7 +79,6 @@
                             <f:selectItem itemLabel="Seleccione una categoría" itemValue="" noSelectionOption="true"/>
                             <f:selectItems value="#{vehicleBean.categories}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat.id}" />
                         </p:selectOneMenu>
-
                         <h:panelGroup id="dynamicFields">
                             <h:panelGrid columns="2" rendered="#{vehicleBean.isCargoVehicle()}">
                                 <p:outputLabel for="cargoCapacity" value="Capacidad de Carga:" />
@@ -135,6 +142,20 @@
                         <h:outputLabel for="update_mileage" value="Kilometraje:"/>
                         <p:inputNumber id="update_mileage" value="#{vehicleBean.newVehicle.mileage}" required="true"/>
 
+                        <p:outputLabel for="status" value="Estado:" />
+                        <p:selectOneMenu id="status" value="#{vehicleBean.newVehicle.status}">
+                            <p:ajax update="update_dynamicFields" />
+                            <f:selectItem itemLabel="Seleccione un estado" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.getVehicleStates()}" var="state" itemLabel="#{state}" itemValue="#{state}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="disponibility" value="Disponibilidad:" />
+                        <p:selectOneMenu id="disponibility" value="#{vehicleBean.newVehicle.availability}">
+                            <p:ajax update="update_dynamicFields" />
+                            <f:selectItem itemLabel="Seleccione una disponibilidad" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{vehicleBean.getVehicleAvailability()}" var="dispo" itemLabel="#{dispo}" itemValue="#{dispo}" />
+                        </p:selectOneMenu>
+
                         <p:outputLabel for="update_category" value="Categoría:" />
                         <p:selectOneMenu id="update_category" value="#{vehicleBean.newVehicle.categoryId}">
                             <p:ajax update="update_dynamicFields" />
@@ -180,7 +201,8 @@
                     </h:panelGrid>
 
                     <p:commandButton value="Actualizar" icon="pi pi-check"
-                                     actionListener="#{vehicleBean.saveVehicle}"
+                                     actionListener="#{vehicleBean.updateVehicle}"
+                                     update="vehicleForm"
                                      oncomplete="PF('updateVehicleDialog').hide()"/>
                 </h:form>
             </p:dialog>
